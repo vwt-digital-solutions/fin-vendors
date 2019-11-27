@@ -8,7 +8,7 @@ class DBProcessor(object):
         pass
 
     def process(self, payload):
-        if 'when' in payload and 'data' in payload and \
+        if 'gobits' in payload and 'when' in payload['gobits'] and 'data' in payload and \
                 'vendor_number' in payload['data']:
             kind = config.DATASTORE_KIND
 
@@ -18,7 +18,7 @@ class DBProcessor(object):
             if entity is None:
                 entity = datastore.Entity(key=entity_key)
 
-            payload['data']['when'] = payload['when']
+            payload['data']['when'] = payload['gobits']['when']
 
             entity.update(payload['data'])
             self.client.put(entity)
