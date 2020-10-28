@@ -18,7 +18,9 @@ class DBProcessor(object):
             if entity is None:
                 entity = datastore.Entity(key=entity_key)
 
-            payload['data']['when'] = payload['gobits']['when']
+            gobits = payload['gobits'][0] if isinstance(payload['gobits'], list) else payload['gobits']
+
+            payload['data']['when'] = gobits['when']
 
             entity.update(payload['data'])
             self.client.put(entity)
